@@ -16,7 +16,7 @@
           version = packageVersion;
 
           src = pkgs.fetchurl {
-            url = "https://svn.zdechov.net/vcard-studio/bin/vcard-studio_${version}_amd64.deb";
+            url = "https://svn.zdechov.net/vcard-studio/bin/deb/vcard-studio_${version}_amd64.deb";
             sha256 = "sha256-NXTLUlVllqVz2S3SqgvIemGPqa/J/xoFlT8Vs0jEzuU=";
           };
 

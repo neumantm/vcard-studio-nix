@@ -5,5 +5,5 @@ Nix flake for vcard-studio (https://app.zdechov.net/vcard-studio)
 
 Run the following command (startup usually takes a bit):
 ```bash
-IXPKGS_ALLOW_UNFREE=1 nix run --impure github:neumantm/vcard-studio-nix
+NIXPKGS_ALLOW_UNFREE=1 nix run --impure github:neumantm/vcard-studio-nix
 ```

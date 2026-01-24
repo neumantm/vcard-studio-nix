@@ -17,20 +17,27 @@
       customType: 'regex',
       managerFilePatterns: ['*.nix'],
       matchStrings: [
-        '\\SVersion\\s*=\\s*"(?<currentValue>\\S+)";\\s*# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s'
+        'Version\\s*=\\s*"(?<currentValue>\\S+)";\\s*# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s'
       ],
       versioningTemplate: '{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}',
     },
   ],
 
-  "customDatasources": {
-    "vcard-studio": {
-      "defaultRegistryUrlTemplate": "https://svn.zdechov.net/vcard-studio/bin/deb/",
-      "format": "html",
-      "transformTemplates": [
+  customDatasources: {
+    "vcardStudioDs": {
+      defaultRegistryUrlTemplate: "https://svn.zdechov.net/vcard-studio/bin/deb/",
+      format: "html",
+      transformTemplates: [
         '{"releases": releases[`version` ~> /\\.deb/i]}',
         '$ ~> | releases | {"version": $replace(version, /vcard-studio_([0-9]+\\.[0-9]+\\.[0-9]+)_amd64.deb/, "$1")} |'
       ]
     }
-  }
+  },
+
+  logLevelRemap: [
+    {
+      matchMessage: "/^Custom datasource/",
+      newLogLevel: "info"
+    }
+  ]
 }

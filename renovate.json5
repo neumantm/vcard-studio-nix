@@ -17,7 +17,7 @@
       customType: 'regex',
       managerFilePatterns: ['*.nix'],
       matchStrings: [
-        '\\SVersion\\s*=\\s*"(?<currentValue>\\S+)";\\s*# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?'
+        '\\SVersion\\s*=\\s*"(?<currentValue>\\S+)";\\s*# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s'
       ],
       versioningTemplate: '{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}',
     },

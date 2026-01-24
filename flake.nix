@@ -9,7 +9,7 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         packageName = "vcard-studio";
-        packageVersion = "1.4.0";
+        packageVersion = "1.4.0"; # renovate datasource=vcard-studio depName=vcard-studio
 
         app = pkgs.stdenv.mkDerivation rec {
           pname = packageName;

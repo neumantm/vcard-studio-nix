@@ -1,0 +1,22 @@
+name: "Test"
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - name: Check Nix flake inputs
+      uses: DeterminateSystems/flake-checker-action@v12
+    - name: Install nix
+      uses: cachix/install-nix-action@v31
+    - name: Build
+      env:
+        NIXPKGS_ALLOW_UNFREE: 1
+      run: nix build --impure
+    - name: Flake Check
+      env:
+        NIXPKGS_ALLOW_UNFREE: 1
+      run: nix flake check --impure --all-systems

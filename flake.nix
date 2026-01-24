@@ -9,7 +9,7 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         packageName = "vcard-studio";
-        packageVersion = "1.4.0"; # renovate: datasource=custom.vcardStudioDs depName=vcard-studio
+        packageVersion = "1.5.0"; # renovate: datasource=custom.vcardStudioDs depName=vcard-studio
 
         app = pkgs.stdenv.mkDerivation rec {
           pname = packageName;
@@ -17,7 +17,7 @@
 
           src = pkgs.fetchurl {
             url = "https://svn.zdechov.net/vcard-studio/bin/deb/vcard-studio_${version}_amd64.deb";
-            sha256 = "sha256-NXTLUlVllqVz2S3SqgvIemGPqa/J/xoFlT8Vs0jEzuU=";
+            sha256 = "sha256-M2ib2uPu33SylxMonlZT/lXAcTK7L4Yr+QH/wSbIO7E=";
           };
 
           nativeBuildInputs = with pkgs; [ dpkg autoPatchelfHook makeWrapper ];

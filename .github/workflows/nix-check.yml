@@ -17,4 +17,6 @@ jobs:
         NIXPKGS_ALLOW_UNFREE: 1
       run: nix build --impure
     - name: Flake Check
-      run: nix flake check
+      env:
+        NIXPKGS_ALLOW_UNFREE: 1
+      run: nix flake check --impure --all-systems

@@ -29,15 +29,9 @@
       format: "html",
       transformTemplates: [
         '{"releases": releases[`version` ~> /\\.deb/i]}',
-        '$ ~> | releases | {"version": $replace(version, /vcard-studio_([0-9]+\\.[0-9]+\\.[0-9]+)_amd64.deb/, "$1")} |'
+        '$ ~> | releases | {"version": $replace(version, /vcard-studio_([0-9]+\\.[0-9]+\\.[0-9]+)_amd64.deb/, "$1")} |',
+        '$ ~> | releases | {"changelogUrl": $replace("https://svn.zdechov.net/vcard-studio/tags/_version_/Release%20Notes.txt", "_version_", version), "sourceUrl": $replace("https://app.zdechov.net/vcard-studio/browser/tags/_version_", "_version_", version)} |'
       ]
     }
   },
-
-  logLevelRemap: [
-    {
-      matchMessage: "/^Custom datasource/",
-      newLogLevel: "info"
-    }
-  ]
 }

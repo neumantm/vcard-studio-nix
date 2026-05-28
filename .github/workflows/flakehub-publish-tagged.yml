@@ -19,7 +19,7 @@ jobs:
       - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
         with:
           ref: "${{ (inputs.tag != null) && format('refs/tags/{0}', inputs.tag) || '' }}"
-      - uses: "DeterminateSystems/nix-installer-action@00199f951aeb9404028a6e4b95ad42546f73296a" # main
+      - uses: "DeterminateSystems/nix-installer-action@1d87d45818068401a10cf16bdc5f00b24994a83f" # main
       - uses: "DeterminateSystems/flakehub-push@bfc2781eb39e5b27112b6ea8ea48f7d6c8183d67" # main
         with:
           visibility: "public"

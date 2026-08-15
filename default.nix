@@ -1,0 +1,56 @@
+{stdenv, lib, fetchurl,
+dpkg, autoPatchelfHook, makeWrapper,
+cairo, pango, gdk-pixbuf, atkmm, gtk2,
+system,
+...}:
+
+stdenv.mkDerivation rec {
+  pname = "vcard-studio";
+  version = "1.5.0"; # renovate: datasource=custom.vcardStudioDs depName=vcard-studio
+
+  src = fetchurl {
+    url = "https://svn.zdechov.net/vcard-studio/bin/deb/vcard-studio_${version}_amd64.deb";
+    sha256 = "sha256-M2ib2uPu33SylxMonlZT/lXAcTK7L4Yr+QH/wSbIO7E=";
+  };
+
+  nativeBuildInputs = [ dpkg autoPatchelfHook makeWrapper ];
+
+  buildInputs = [ cairo pango gdk-pixbuf atkmm gtk2];
+
+  unpackPhase = ''
+    runHook preUnpack
+
+    dpkg -x $src ./app-src
+
+    runHook postUnpack
+  '';
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p "$out"
+    cp -r app-src/* "$out"
+
+    mv "$out/usr/bin/" "$out/bin"
+    mv "$out/usr/share/" "$out/share"
+    rmdir "$out/usr/"
+
+    for f in "$out/share/applications/"*.desktop; do
+      substituteInPlace "$f" --replace "/usr/" "$out/"
+    done
+
+    wrapProgram "$out/bin/vCardStudio" \
+      --set NIX_REDIRECTS "/usr/share=$out/share"
+
+    runHook postInstall
+  '';
+
+  meta = with lib; {
+    description = "A contact management application with support for vCard file format (.vcf).";
+    homepage = "https://app.zdechov.net/vcard-studio";
+    license = licenses.unfree;
+    platforms = with platforms; [ system ];
+    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    mainProgram = "vCardStudio";
+  };
+}

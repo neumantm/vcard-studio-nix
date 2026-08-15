@@ -11,7 +11,7 @@ jobs:
     - name: Check Nix flake inputs
       uses: DeterminateSystems/flake-checker-action@de924abd783455e8429c858962b9e43062d19da1 # v13
     - name: Install nix
-      uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31
+      uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31
     - name: Build
       env:
         NIXPKGS_ALLOW_UNFREE: 1

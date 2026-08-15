@@ -1,15 +1,17 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs = { self, nixpkgs }: let
+    packageName = "vcard-studio";
+    packageVersion = "1.5.0"; # renovate: datasource=custom.vcardStudioDs depName=vcard-studio
+
+    eachSupportedSystem = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
+  in {
+    packages = eachSupportedSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        packageName = "vcard-studio";
-        packageVersion = "1.5.0"; # renovate: datasource=custom.vcardStudioDs depName=vcard-studio
 
         app = pkgs.stdenv.mkDerivation rec {
           pname = packageName;
@@ -61,14 +63,20 @@
             mainProgram = "vCardStudio";
           };
         };
-      in {
-        packages.${packageName} = app;
-
-        defaultPackage = self.packages.${system}.${packageName};
-
-        devShell = pkgs.mkShell {
-          inputsFrom = builtins.attrValues self.packages.${system};
-        };
+      in
+      {
+        ${packageName} = app;
       }
     );
+
+    defaultPackage = eachSupportedSystem (system:
+      self.packages.${system}.${packageName}
+    );
+
+    devShell = eachSupportedSystem (system:
+      nixpkgs.legacyPackages.${system}.mkShell {
+        inputsFrom = builtins.attrValues self.packages.${system};
+      }
+    );
+  };
 }

@@ -20,7 +20,7 @@ jobs:
         with:
           ref: "${{ (inputs.tag != null) && format('refs/tags/{0}', inputs.tag) || '' }}"
       - uses: "DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa" # main
-      - uses: "DeterminateSystems/flakehub-push@e001ee821cdb763ef120c01f1048bfb2f938bb9c" # main
+      - uses: "DeterminateSystems/flakehub-push@2769db2f8d26fe4fa21b37428901bc2b6a54e012" # main
         with:
           visibility: "public"
           name: "neumantm/vcard-studio-nix"
